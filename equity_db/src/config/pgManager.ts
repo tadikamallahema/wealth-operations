@@ -4,11 +4,11 @@ import { Client } from 'pg';
 //const password="JiNxvt7+aaXUP6h"
 //console.log(process.env.PASSWORD);
 const client = new Client({
-  host: 'aws-1-ap-south-1.pooler.supabase.com',
-  port: 6543,
-  user: 'postgres.uqxsleospestpmjsizjm',
-  password: process.env.PASSWORD,
-  database: 'postgres',
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
   ssl: {
     rejectUnauthorized: false
   }
