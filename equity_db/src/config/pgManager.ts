@@ -15,8 +15,7 @@ const client = new Client({
 })
  async function run() {
   await client.connect()
-  const res = await client.query('SELECT * from equity_users')
-  console.log(res.rows);
+  console.log("database connected succcess")
 }
 run() 
 export default client;

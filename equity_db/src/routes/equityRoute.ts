@@ -1,5 +1,7 @@
 import express from "express";
 import {
+  fetchAllHoldings,
+  fetchAllTransactions,
   getHoldings,
   getMarket,
   getTransactions,
@@ -10,5 +12,7 @@ const equityRouter = express.Router();
 equityRouter.get("/holdings/:pan_no", getHoldings);
 equityRouter.get("/transactions/:pan_no", getTransactions);
 equityRouter.get("/market", getMarket);
+equityRouter.get("/holdings",fetchAllHoldings)
+equityRouter.get("/transactions",fetchAllTransactions)
 
 export default equityRouter;
