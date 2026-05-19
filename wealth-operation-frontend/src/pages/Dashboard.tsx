@@ -1,18 +1,7 @@
 import Layout from "../components/Layout";
 import StatCard from "../components/StatCard";
 
-import {
-    PieChart,
-    Pie,
-    Cell,
-    Tooltip,
-    ResponsiveContainer,
-    BarChart,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Bar
-} from "recharts";
+import {PieChart,Pie,Cell,Tooltip,ResponsiveContainer,BarChart,XAxis,YAxis,CartesianGrid,Bar} from "recharts";
 
 const assetData = [
     { name: "Equity", value: 400 },
@@ -34,21 +23,12 @@ const COLORS = [
 ];
 
 export default function Dashboard() {
-
     return (
-
         <Layout>
-
             <div className="grid grid-cols-4 gap-5">
+                <StatCard title="Total Investors" value="248K+"/>
 
-                <StatCard
-                    title="Total Investors"
-                    value="248K+"
-                />
-
-                <StatCard
-                    title="AUM"
-                    value="₹1.2T"
+                <StatCard title="AUM" value="₹1.2T"
                 />
 
                 <StatCard

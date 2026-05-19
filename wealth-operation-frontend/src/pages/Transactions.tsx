@@ -1,25 +1,17 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Sidebar from '../components/SideBar';
-import Navbar from '../components/Navbar';
 import Layout from '../components/Layout';
 
 export default function Transactions() {
-
     const [transactions, setTransactions] = useState<any[]>([]);
-
     useEffect(() => {
         fetchTransactions();
     }, []);
 
     const fetchTransactions = async () => {
-
         try {
-
             const response = await axios.get('/transactions');
-
             setTransactions(response.data.data || []);
-
         } catch (error) {
             console.log(error);
         }
@@ -30,9 +22,7 @@ export default function Transactions() {
            <Layout>
             <div className='main-content'>
                 <div style={{ padding: '20px' }}>
-
                     <h2>Transactions</h2>
-
                     {
                         transactions.map((transaction, index) => (
                             <div key={index} className='stat-card'>
@@ -42,12 +32,9 @@ export default function Transactions() {
                             </div>
                         ))
                     }
-
                 </div>
-
             </div>
             </Layout>
-
         </div>
     );
 }

@@ -7,8 +7,7 @@ export default function Login() {
 
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
-        otp: ''
+        password: ''
     });
 
     const [loading, setLoading] = useState(false);
@@ -25,9 +24,11 @@ export default function Login() {
         try {
             setLoading(true);
 
-            const response = await axios.post('http://localhost:4004/api/auth/login', formData);
+            const response = await axios.post('http://localhost:4004/api/auth/login', formData,{
+                withCredentials:true
+            });
 
-            localStorage.setItem('token', response.data.token || 'dummy-token');
+            //localStorage.setItem('token', response.data.token || 'dummy-token');
 
             navigate('/dashboard');
 
@@ -78,14 +79,7 @@ export default function Login() {
                         className='p-4 rounded-lg bg-[#1d2440] outline-none'
                     />
 
-                    <input
-                        type='text'
-                        placeholder='Enter OTP'
-                        name='otp'
-                        value={formData.otp}
-                        onChange={handleChange}
-                        className='p-4 rounded-lg bg-[#1d2440] outline-none'
-                    />
+                    
 
                     <button className='p-4 rounded-lg bg-gradient-to-r from-cyan-500 to-violet-500'>
                         {loading ? 'Loading...' : 'Login'}

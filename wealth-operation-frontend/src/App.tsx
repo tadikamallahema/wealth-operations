@@ -8,6 +8,7 @@ import Equity from "./pages/Equity";
 import MutualFunds from "./pages/MutualFunds";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import ProtectedRoutes from "./context/ProtectedRoutes";
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
 
     <Routes>
       <Route path='/' element={<Login />} />
-      <Route path='/dashboard' element={<Dashboard />} />
+
       <Route path='/investors' element={<Investors />} />
       <Route path='/transactions' element={<Transactions />} />
       <Route path='/sip' element={<SIP />} />
@@ -27,6 +28,11 @@ function App() {
       <Route path='/mutual-funds' element={<MutualFunds/>} />
       <Route path='/profile' element={<Profile/>} />
       <Route path='*' element={<NotFound/>} />
+      
+      <Route path='/dashboard' element={
+        <ProtectedRoutes allowedRoles={["Admin"]}><Dashboard />
+        </ProtectedRoutes> }/>
+      
     </Routes>
     </div>
       
