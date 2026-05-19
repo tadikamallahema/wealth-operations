@@ -19,3 +19,9 @@ export async function findUserByEmail(email:string){
     )
     return res.rows.length?res.rows[0]:null;
 }
+export async function getAll(){
+    const result=await client.query(
+        `select id,full_name,email,role,is_active from platform_users`
+    );
+    return result.rows[0];
+}
