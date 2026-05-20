@@ -1,5 +1,16 @@
 import client from "../config/pgManager.js";
 
+export const getAllUsers = async () => {
+  try {
+    const data = await client.query(
+      `SELECT * FROM equity_users
+        ORDER BY investor_id;`,
+    );
+    return data.rows
+  } catch (err) {
+    console.log(err);
+  }
+}
 export const getAllHoldings = async () => {
   try {
     const data = await client.query(

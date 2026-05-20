@@ -4,8 +4,25 @@ import {
   getEquityMarketPrices,
   getAllHoldings,
   getAllTransactions,
+  getAllUsers,
 } from "../models/equityModel.js";
 import { Request, Response } from "express";
+
+export const fetchAllUsers =  async (
+  request: Request,
+  response: Response,
+) => {
+  try {
+    
+    const data = await getAllUsers();
+    response.status(200).json(data);
+  } catch (err) {
+    response.status(500).json({
+      message: "Error fetching holdings",
+      error: err,
+    });
+  }
+};
 
 export const fetchAllHoldings = async (
   request: Request,
