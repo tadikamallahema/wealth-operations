@@ -43,11 +43,6 @@ export default function Sidebar() {
                     icon: <ArrowLeftRight size={20} />
                 },
 
-                {
-                    name: "SIP",
-                    path: "/sip",
-                    icon: <CircleDollarSign size={20} />
-                },
 
                 {
                     name: "Equity",
