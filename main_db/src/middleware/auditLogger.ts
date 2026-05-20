@@ -3,7 +3,7 @@ import * as auditService from "../services/auditService.js";
 export const recordAudit = async (opts: {
   pan_number?: string;
   service_name?: string;
-  user_id?: number;
+  user_id?: string;
   role_id?: number;
   action_type: string;
   entity_type?: string;
@@ -41,26 +41,26 @@ export const recordAudit = async (opts: {
 };
 
 // Convenience Express middleware factory to log after handler
-export const auditMiddleware = (actionType: string, entityType?: string) => {
+export const auditMiddleware = (actionType: string, entityType?: string, actionStatus = "SUCCESS") => {
   return async (req: any, res: any, next: any) => {
     const user = req.user;
     const origSend = res.send;
     res.send = function (body: any) {
       try {
         recordAudit({
-          user_id: user?.id ? Number(user.id) : undefined,
-          role_id: user?.role ? undefined : undefined,
+          user_id: user?.id,
+          role_id: typeof user?.role === "number" ? user.role : undefined,
           action_type: actionType,
           entity_type: entityType,
           entity_id: req.params?.id || req.body?.id || undefined,
-          action_status: res.statusCode >= 200 && res.statusCode < 300 ? "SUCCESS" : "FAILURE",
+          action_status: actionStatus,
           description: `Request to ${req.path}`,
           endpoint: req.path,
           request_method: req.method,
-          ip_address: req.ip || req.connection?.remoteAddress,
-          old_data: req.body?.old_data,
-          new_data: req.body?.new_data,
-          metadata: { response_status: res.statusCode },
+          ip_address: req.ip,
+          old_data: req.body?.old_data ?? null,
+          new_data: req.body?.new_data ?? body,
+          metadata: { status: res.statusCode },
         });
       } catch (e) {
         console.error(e);
