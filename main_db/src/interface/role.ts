@@ -1,0 +1,1 @@
+export type Role="Admin"|"Operations_manager" | 'Compliance_officer'| 'Monitor'
