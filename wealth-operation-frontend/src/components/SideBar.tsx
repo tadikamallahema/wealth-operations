@@ -45,7 +45,7 @@ export default function Sidebar() {
         <div
             className="w-[260px] bg-[#0b1120] border-r border-white/10 text-white p-6 flex flex-col">
             <h1
-                className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-violet-500 bg-clip-text text-transparent">AetherOps
+                className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-violet-500 bg-clip-text text-transparent">Fintech
             </h1>
 
             <div className="mt-10 flex flex-col gap-3">

@@ -5,7 +5,7 @@ export default function Navbar() {
     const navigate=useNavigate();
     return (
         <div
-            className=" h-[80px] bg-[#0f172a] border-b border-white/10 px-8 flex justify-between items-centertext-white">
+            className=" h-[80px] bg-[#0f172a] border-b border-white/10 px-8 flex justify-between items-center text-white">
             <h1 className="text-2xl font-semibold">Wealth Operations Dashboard</h1>
             <div className="flex items-center gap-5">
                 <div
