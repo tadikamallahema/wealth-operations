@@ -1,14 +1,23 @@
 import { Request, Response } from "express";
 import { equityService, mfService } from "../config/serviceClients.js";
+import { redisClient } from "../config/redis.js";
 
 const unwrap = (response: any) => response?.data?.data ?? response?.data ?? response;
+const CACHE_TTL_SECONDS = 30;
 
 export const getPortfolio = async (req: Request, res: Response) => {
   const pan_no = String(req.query.pan_no ?? "");
   const investorId = String(req.query.investorId ?? "");
   const fundId = String(req.query.fundId ?? "");
+  const cacheKey = `portfolio:${pan_no}:${investorId}:${fundId}`;
 
   try {
+    const cachedValue = await redisClient.get(cacheKey);
+    if (cachedValue) {
+      const cachedPortfolio = JSON.parse(cachedValue);
+      return res.status(200).json({ success: true, portfolio: cachedPortfolio, cached: true });
+    }
+
     const equityHoldingsRequest = pan_no
       ? equityService.get(`/api/equity/holdings/${pan_no}`)
       : equityService.get("/api/equity/holdings");
@@ -67,7 +76,11 @@ export const getPortfolio = async (req: Request, res: Response) => {
       },
     };
 
-    return res.status(200).json({ success: true, portfolio });
+    await redisClient.set(cacheKey, JSON.stringify(portfolio), {
+      EX: CACHE_TTL_SECONDS,
+    });
+
+    return res.status(200).json({ success: true, portfolio, cached: false });
   } catch (error: any) {
     console.error("Portfolio aggregation failed:", error?.message ?? error);
     return res.status(502).json({

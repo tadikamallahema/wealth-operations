@@ -6,12 +6,17 @@ import authRoutes from './routes/authRoutes.js';
 import portfolioRoutes from './routes/portfolioRoutes.js';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './config/pgManager.js';
+import { connectRedis } from './config/redis.js';
 import cors from 'cors';
 import http from "http";
 import { initSocket } from "./config/socket.js";
 import { socketHandler }from "./sockets/socketHandler.js";
 import { socketAuth }from "./sockets/socketAuth.js";
-
+import {
+  apiRateLimiter
+}
+from "./middleware/rate.Limit.middleware.js"; 
+import auditRoutes from './routes/auditRoutes.js';
 
 dotenv.config();
 
@@ -29,11 +34,14 @@ const io = initSocket(server);
 
 socketHandler(io);
 await connectDB();
+await connectRedis();
+
 //await createTable();
 
 app.use('/api/auth',authRoutes);
 app.use('/api/portfolio', portfolioRoutes);
-
+app.use('/api/audit', auditRoutes);
+app.use(apiRateLimiter);
 server.listen(4004, () => {
   console.log("Server is running on port 4004");
 });
