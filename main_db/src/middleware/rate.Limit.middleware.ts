@@ -9,7 +9,7 @@ rateLimit({
   windowMs:
     15 * 60 * 1000,
 
-  max: 400,
+  max: 100,
 
   message: {
 
