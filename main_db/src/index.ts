@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import './config/pgManager.js';
 import { createTable } from './models/schema.js';
 import authRoutes from './routes/authRoutes.js';
+import portfolioRoutes from './routes/portfolioRoutes.js';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './config/pgManager.js';
 import cors from 'cors';
@@ -31,6 +32,7 @@ await connectDB();
 //await createTable();
 
 app.use('/api/auth',authRoutes);
+app.use('/api/portfolio', portfolioRoutes);
 
 server.listen(4004, () => {
   console.log("Server is running on port 4004");
