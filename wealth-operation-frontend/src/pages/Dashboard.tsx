@@ -1,15 +1,37 @@
+import {
+    useEffect,
+    useState
+} from "react";
+
 import Layout from "../components/Layout";
 import StatCard from "../components/StatCard";
 
-import {PieChart,Pie,Cell,Tooltip,ResponsiveContainer,BarChart,XAxis,YAxis,CartesianGrid,Bar} from "recharts";
+import socket from "../socket/socket";
 
-const assetData = [
+import {
+    PieChart,
+    Pie,
+    Cell,
+    Tooltip,
+    ResponsiveContainer,
+    BarChart,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Bar
+} from "recharts";
+
+import {
+    AlertTriangle
+} from "lucide-react";
+
+const initialAssetData = [
     { name: "Equity", value: 400 },
     { name: "Mutual Funds", value: 300 },
     { name: "Real Estate", value: 200 }
 ];
 
-const transactionData = [
+const initialTransactionData = [
     { month: "Jan", transactions: 120 },
     { month: "Feb", transactions: 240 },
     { month: "Mar", transactions: 180 },
@@ -23,12 +45,49 @@ const COLORS = [
 ];
 
 export default function Dashboard() {
-    return (
-        <Layout>
-            <div className="grid grid-cols-4 gap-5">
-                <StatCard title="Total Investors" value="248K+"/>
 
-                <StatCard title="AUM" value="₹1.2T"
+    const [alerts, setAlerts] =
+        useState<string[]>([]);
+
+    const [assetData, setAssetData] =
+        useState(initialAssetData);
+
+    const [transactionData, setTransactionData] =
+        useState(initialTransactionData);
+
+useEffect(() => {
+
+   socket.on(
+      "test_alert",
+      (data) => {
+
+         console.log(data);
+
+         alert(data.message);
+      }
+   );
+
+   return () => {
+
+      socket.off("test_alert");
+   };
+
+}, []);
+
+    return (
+
+        <Layout>
+
+            <div className="grid grid-cols-4 gap-5">
+
+                <StatCard
+                    title="Total Investors"
+                    value="248K+"
+                />
+
+                <StatCard
+                    title="AUM"
+                    value="₹1.2T"
                 />
 
                 <StatCard
@@ -75,6 +134,7 @@ export default function Dashboard() {
                                 {
                                     assetData.map(
                                         (_, index) => (
+
                                             <Cell
                                                 key={index}
                                                 fill={
@@ -136,6 +196,65 @@ export default function Dashboard() {
                         </BarChart>
 
                     </ResponsiveContainer>
+
+                </div>
+
+            </div>
+
+            <div
+                className="
+                    mt-8
+                    bg-[#111827]
+                    rounded-2xl
+                    p-5
+                    text-white
+                "
+            >
+
+                <div className="flex items-center gap-3">
+
+                    <AlertTriangle
+                        className="text-red-500"
+                    />
+
+                    <h2 className="text-2xl font-bold">
+                        Realtime Alerts
+                    </h2>
+
+                </div>
+
+                <div className="mt-5 space-y-4">
+
+                    {
+                        alerts.length === 0 && (
+
+                            <p className="text-gray-400">
+                                No suspicious activity detected.
+                            </p>
+                        )
+                    }
+
+                    {
+                        alerts.map(
+                            (alert, index) => (
+
+                                <div
+                                    key={index}
+                                    className="
+                                        bg-red-500/10
+                                        border
+                                        border-red-500/20
+                                        p-4
+                                        rounded-xl
+                                    "
+                                >
+
+                                    {alert}
+
+                                </div>
+                            )
+                        )
+                    }
 
                 </div>
 
