@@ -1,3 +1,4 @@
+import './middleware/telemetry.js';
 import express from 'express';
 import dotenv from 'dotenv';
 import './config/pgManager.js';
@@ -12,6 +13,7 @@ import http from "http";
 import { initSocket } from "./config/socket.js";
 import { socketHandler }from "./sockets/socketHandler.js";
 import { socketAuth }from "./sockets/socketAuth.js";
+
 import {
   apiRateLimiter
 }
