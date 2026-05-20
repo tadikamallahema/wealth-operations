@@ -4,9 +4,9 @@ import cookie from "cookie";
 
 export const socketAuth =(socket: any, next: any) => {
     try {
-        console.log(
+       /*  console.log(
    socket.handshake.headers.cookie
-);
+); */
         const rawCookie =socket.handshake.headers.cookie;
         if (!rawCookie) {
             return next(

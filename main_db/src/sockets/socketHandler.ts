@@ -21,11 +21,11 @@ export const socketHandler =
 
    io.on("connection", (socket: any) => {
 
-      console.log(
+      /* console.log(
          "SOCKET CONNECTED"
-      );
+      ); */
 
-      console.log(socket.id);
+      //console.log(socket.id);
 
       socket.emit(
          "test_alert",
