@@ -149,3 +149,73 @@ export const cancelSip = async (
   return result.rows[0];
 
 };
+export const getFailedSips = async () => {
+
+  const query = `
+    SELECT *
+    FROM mf_sip_failures
+    ORDER BY failure_date DESC
+  `;
+
+  const result =
+    await pool.query(query);
+
+  return result.rows;
+
+};
+
+
+
+export const getSipFailures = async (
+  sipId: string
+) => {
+
+  const query = `
+    SELECT *
+    FROM mf_sip_failures
+    WHERE sip_id = $1
+    ORDER BY failure_date DESC
+  `;
+
+  const result =
+    await pool.query(query, [
+      sipId
+    ]);
+
+  return result.rows;
+
+};
+
+
+
+export const retryFailedSip = async (
+  sipId: string
+) => {
+
+  // UPDATE FAILURE STATUS
+  const updateQuery = `
+    UPDATE mf_sip_failures
+    SET retry_status = 'SUCCESS'
+    WHERE sip_id = $1
+    RETURNING *
+  `;
+
+  const result =
+    await pool.query(updateQuery, [
+      sipId
+    ]);
+
+  // UPDATE SIP STATUS
+  const sipQuery = `
+    UPDATE mf_sips
+    SET sip_status = 'ACTIVE'
+    WHERE id = $1
+  `;
+
+  await pool.query(sipQuery, [
+    sipId
+  ]);
+
+  return result.rows;
+
+};

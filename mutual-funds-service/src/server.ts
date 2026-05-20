@@ -8,6 +8,10 @@ import fundsRoutes from "./routes/funds.routes";
 import investorsRoutes from "./routes/investors.routes";
 import sipsRoutes from "./routes/sips.routes";
 import transactionsRoutes from "./routes/transactions.routes";
+import {
+  apiRateLimiter
+}
+from "./middlewares/rateLimit.middleware";
 dotenv.config();
 
 const app = express();
@@ -20,7 +24,7 @@ app.use(cors());
 
 app.use(express.json());
 
-
+app.use(apiRateLimiter);
 // Routes
 app.use("/funds", fundsRoutes);
 app.use("/investors", investorsRoutes);

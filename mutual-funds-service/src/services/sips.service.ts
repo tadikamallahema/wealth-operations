@@ -137,3 +137,34 @@ export const cancelSip = async (
   return sip;
 
 };
+export const getFailedSips = async () => {
+
+  return await sipsRepository
+    .getFailedSips();
+
+};
+
+
+
+export const getSipFailures = async (
+  sipId: string
+) => {
+
+  return await sipsRepository
+    .getSipFailures(sipId);
+
+};
+
+
+
+export const retryFailedSip = async (
+  sipId: string
+) => {
+
+  const retry =
+    await sipsRepository
+      .retryFailedSip(sipId);
+
+  return retry;
+
+};

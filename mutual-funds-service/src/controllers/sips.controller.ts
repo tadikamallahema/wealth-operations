@@ -196,3 +196,94 @@ export const cancelSip = async (
   }
 
 };
+export const getFailedSips = async (
+  req: Request,
+  res: Response
+) => {
+
+  try {
+
+    const failedSips =
+      await sipsService.getFailedSips();
+
+    res.status(200).json({
+      success: true,
+      data: failedSips
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch failed SIPs"
+    });
+
+  }
+
+};
+
+
+
+export const getSipFailures = async (
+  req: Request,
+  res: Response
+) => {
+
+  try {
+
+    const sipId =
+      req.params.sipId as string;
+
+    const failures =
+      await sipsService.getSipFailures(
+        sipId
+      );
+
+    res.status(200).json({
+      success: true,
+      data: failures
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch SIP failures"
+    });
+
+  }
+
+};
+
+
+
+export const retryFailedSip = async (
+  req: Request,
+  res: Response
+) => {
+
+  try {
+
+    const sipId =
+      req.params.sipId as string;
+
+    const retry =
+      await sipsService.retryFailedSip(
+        sipId
+      );
+
+    res.status(200).json({
+      success: true,
+      data: retry
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: "Retry failed"
+    });
+
+  }
+
+};
