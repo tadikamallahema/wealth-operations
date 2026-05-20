@@ -1,0 +1,18 @@
+import { NextFunction, Request, Response } from "express"
+import { Role } from "../interface/role.js";
+
+
+export const authorize = (...allowedroles: Role[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!(req as any).user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    if (!allowedroles.includes((req as any).user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: "Your are not authorized to access this page",
+      });
+    }
+    next();
+  };
+};
