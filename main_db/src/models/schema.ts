@@ -4,13 +4,9 @@ export const createTable=()=>{
     `
     CREATE TABLE platform_users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-
     full_name VARCHAR(100) NOT NULL,
-
     email VARCHAR(150) UNIQUE NOT NULL,
-
     password_hash TEXT NOT NULL,
-
     role VARCHAR(30) NOT NULL CHECK (
         role IN (
             'Admin',
@@ -19,7 +15,6 @@ export const createTable=()=>{
             'Monitor'
         )
     ),
-
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()

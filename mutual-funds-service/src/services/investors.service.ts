@@ -27,13 +27,13 @@ export const getInvestorById = async (
 
   if (cachedInvestor) {
 
-    console.log("Investor from Redis 🚀");
+    console.log("Investor from Redis ");
 
     return JSON.parse(cachedInvestor);
 
   }
 
-  console.log("Investor from PostgreSQL 🔥");
+  console.log("Investor from PostgreSQL ");
 
   const investor =
     await investorsRepository
@@ -65,13 +65,13 @@ export const getInvestorHoldings = async (
 
   if (cachedHoldings) {
 
-    console.log("Holdings from Redis 🚀");
+    console.log("Holdings from Redis ");
 
     return JSON.parse(cachedHoldings);
 
   }
 
-  console.log("Holdings from PostgreSQL 🔥");
+  console.log("Holdings from PostgreSQL ");
 
   const holdings =
     await investorsRepository
@@ -118,13 +118,13 @@ export const getPortfolioSummary = async (
 
   if (cachedSummary) {
 
-    console.log("Portfolio from Redis 🚀");
+    console.log("Portfolio from Redis ");
 
     return JSON.parse(cachedSummary);
 
   }
 
-  console.log("Portfolio from PostgreSQL 🔥");
+  console.log("Portfolio from PostgreSQL ");
 
   const summary =
     await investorsRepository
@@ -156,13 +156,13 @@ export const getInvestorByPAN = async (
 
   if (cachedInvestor) {
 
-    console.log("PAN lookup from Redis 🚀");
+    console.log("PAN lookup from Redis ");
 
     return JSON.parse(cachedInvestor);
 
   }
 
-  console.log("PAN lookup from PostgreSQL 🔥");
+  console.log("PAN lookup from PostgreSQL ");
 
   const investor =
     await investorsRepository

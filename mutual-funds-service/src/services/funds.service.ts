@@ -16,13 +16,13 @@ export const getAllFunds = async () => {
 
   if (cachedFunds) {
 
-    console.log("Fetching Funds from Redis 🚀");
+    console.log("Fetching Funds from Redis ");
 
     return JSON.parse(cachedFunds);
 
   }
 
-  console.log("Fetching Funds from PostgreSQL 🔥");
+  console.log("Fetching Funds from PostgreSQL ");
 
   // FETCH FROM DB
   const funds =
@@ -55,13 +55,13 @@ export const getFundById = async (
 
   if (cachedFund) {
 
-    console.log("Fund from Redis 🚀");
+    console.log("Fund from Redis ");
 
     return JSON.parse(cachedFund);
 
   }
 
-  console.log("Fund from PostgreSQL 🔥");
+  console.log("Fund from PostgreSQL ");
 
   const fund =
     await fundsRepository.getFundById(
@@ -95,13 +95,13 @@ export const getFundNAV = async (
 
   if (cachedNAV) {
 
-    console.log("NAV from Redis 🚀");
+    console.log("NAV from Redis ");
 
     return JSON.parse(cachedNAV);
 
   }
 
-  console.log("NAV from PostgreSQL 🔥");
+  console.log("NAV from PostgreSQL ");
 
   // FETCH FROM DB
   const nav =
@@ -136,13 +136,13 @@ export const getFundNAVHistory = async (
 
   if (cachedHistory) {
 
-    console.log("NAV History from Redis 🚀");
+    console.log("NAV History from Redis ");
 
     return JSON.parse(cachedHistory);
 
   }
 
-  console.log("NAV History from PostgreSQL 🔥");
+  console.log("NAV History from PostgreSQL ");
 
   const history =
     await fundsRepository

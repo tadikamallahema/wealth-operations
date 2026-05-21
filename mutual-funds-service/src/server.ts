@@ -39,7 +39,7 @@ async function startServer() {
     // Database Connection Test
     const client = await pool.connect();
 
-    console.log("PostgreSQL Connected ✅");
+    console.log("PostgreSQL Connected ");
 
     client.release();
 
@@ -47,7 +47,7 @@ async function startServer() {
     app.listen(PORT, () => {
 
       console.log(
-        `Mutual Funds Service Running on Port ${PORT} 🚀`
+        `Mutual Funds Service Running on Port ${PORT} `
       );
 
     });

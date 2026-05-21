@@ -23,7 +23,7 @@ const sdk = new NodeSDK({
    serviceName:
       "main-db-service",
 
-   traceExporter,
+   /* traceExporter, */
 
    instrumentations: [
 

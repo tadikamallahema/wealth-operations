@@ -1,7 +1,7 @@
 import express from "express";
 import { createAudit, listAudits } from "../controller/auditController.js";
 import { verifyToken } from "../middleware/authMiddleware.js";
-import { authorize } from "../middleware/authorize.js";
+//import { authorize } from "../middleware/authorize.js";
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ const router = express.Router();
 router.post("/", verifyToken, createAudit);
 
 // List audits - only Compliance or Admin
-router.get("/", verifyToken, authorize("Compliance_officer", "Admin"), listAudits);
+router.get("/" ,/*  verifyToken, authorize("Compliance_officer", "Admin"), */  listAudits);
 
 export default router;

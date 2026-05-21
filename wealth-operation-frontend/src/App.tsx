@@ -48,7 +48,6 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Investors from "./pages/Investors";
 import Transactions from "./pages/Transactions";
-import SIP from "./pages/SIP";
 import Equity from "./pages/Equity";
 import MutualFunds from "./pages/MutualFunds";
 import Profile from "./pages/Profile";
@@ -58,10 +57,7 @@ import ProtectedRoutes from "./context/ProtectedRoutes";
 
 import MonitoringDashboard from "./pages/monitoring/MonitoringDashboard";
 import SystemHealth from "./pages/monitoring/SystemHealth";
-import ApiMetrics from "./pages/monitoring/ApiMetrics";
-import QueueMetrics from "./pages/monitoring/QueueMetrics";
-import LiveEvents from "./pages/monitoring/LiveEvents";
-
+import AuditLogs from "./pages/monitoring/AuditLogs";
 function App() {
 
   return (
@@ -77,73 +73,61 @@ function App() {
 
         <Route
           path="/dashboard"
-          element={
-            <ProtectedRoutes
-              allowedRoles={["Admin"]}
-            >
-              <Dashboard />
-            </ProtectedRoutes>
-          }
+          element={<Dashboard />}
         />
-
+        
         <Route
           path="/investors"
-          element={<Investors />}
+          element=
+          {
+            <Investors />
+            }
         />
 
         <Route
           path="/transactions"
-          element={<Transactions />}
-        />
-
-        <Route
-          path="/sip"
-          element={<SIP />}
+          element={
+            <Transactions />
+            }
         />
 
         <Route
           path="/equity"
-          element={<Equity />}
+          element={
+            <Equity />
+           }
         />
 
         <Route
           path="/mutual-funds"
-          element={<MutualFunds />}
+          element={
+            <MutualFunds />
+           }
         />
 
         <Route
           path="/profile"
-          element={<Profile />}
+          element={ 
+            <Profile />
+              }
         />
 
         <Route
           path="/monitoring"
-          element={<MonitoringDashboard />}
+          element={
+            <MonitoringDashboard />
+         }
         />
 
-        <Route
+        {/* <Route
           path="/monitoring/system-health"
-          element={<SystemHealth />}
-        />
+          element={
+          <ProtectedRoutes
+              allowedRoles={["Admin","Operations_manager"]}
+            ><SystemHealth /></ProtectedRoutes>}
+        /> */}
 
-        <Route
-          path="/monitoring/api-metrics"
-          element={<ApiMetrics />}
-        />
-
-        <Route
-          path="/monitoring/queue-metrics"
-          element={<QueueMetrics />}
-        />
-
-        <Route
-          path="/monitoring/live-events"
-          element={<LiveEvents />}
-        />
-        <Route
-        path="/monitorDashboard"
-        element={<MonitoringDashboard/>}/>
-
+        <Route path="/audit"  element={<AuditLogs/>}/>
         <Route
           path="*"
           element={<NotFound />}

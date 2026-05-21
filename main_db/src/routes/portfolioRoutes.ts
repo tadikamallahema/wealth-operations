@@ -7,8 +7,8 @@ const portfolioRoutes = express.Router();
 
 portfolioRoutes.get(
   "/",
-  verifyToken,
-  authorize("Compliance_officer", "Admin"),
+ /*  verifyToken,
+  authorize("Compliance_officer", "Admin"), */
   getPortfolio
 );
 
