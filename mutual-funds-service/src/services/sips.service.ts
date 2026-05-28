@@ -38,13 +38,13 @@ export const getInvestorSips = async (
 
   if (cachedSips) {
 
-    console.log("SIPs from Redis 🚀");
+    console.log("SIPs from Redis ");
 
     return JSON.parse(cachedSips);
 
   }
 
-  console.log("SIPs from PostgreSQL 🔥");
+  console.log("SIPs from PostgreSQL ");
 
   const sips =
     await sipsRepository
