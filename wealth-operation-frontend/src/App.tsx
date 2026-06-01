@@ -52,7 +52,7 @@ import Equity from "./pages/Equity";
 import MutualFunds from "./pages/MutualFunds";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-
+import socket from "./socket/socket";
 import ProtectedRoutes from "./context/ProtectedRoutes";
 
 import MonitoringDashboard from "./pages/monitoring/MonitoringDashboard";

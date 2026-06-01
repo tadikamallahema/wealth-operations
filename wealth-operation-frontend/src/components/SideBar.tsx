@@ -49,7 +49,7 @@ export default function Sidebar() {
         items: [
           {
             name: "Dashboard",
-            path: "/dashboard/admin",
+            path: "/dashboard",
             icon: <LayoutDashboard size={20} />,
           },
 
@@ -111,7 +111,7 @@ export default function Sidebar() {
         items: [
           {
             name: "Dashboard",
-            path: "/dashboard/operations",
+            path: "/dashboard",
             icon: <LayoutDashboard size={20} />,
           },
 
@@ -151,7 +151,7 @@ export default function Sidebar() {
         items: [
           {
             name: "Dashboard",
-            path: "/dashboard/compliance",
+            path: "/dashboard",
             icon: <LayoutDashboard size={20} />,
           },
 
@@ -180,7 +180,7 @@ export default function Sidebar() {
         items: [
           {
             name: "Dashboard",
-            path: "/dashboard/monitor",
+            path: "/dashboard",
             icon: <LayoutDashboard size={20} />,
           },
 

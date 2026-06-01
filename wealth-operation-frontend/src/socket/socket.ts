@@ -1,7 +1,9 @@
 import { io } from "socket.io-client";
 
 const socket = io(
-   "http://localhost:4004"
+   "http://localhost:4004",{
+        withCredentials: true
+    }
 );
 
 socket.on("connect", () => {

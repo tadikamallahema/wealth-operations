@@ -44,35 +44,123 @@ const COLORS = [
     "#f97316"
 ];
 
+interface AlertPayload {
+    message: string;
+}
+
 export default function Dashboard() {
 
     const [alerts, setAlerts] =
         useState<string[]>([]);
 
-    const [assetData, setAssetData] =
+    const [assetData] =
         useState(initialAssetData);
 
-    const [transactionData, setTransactionData] =
+    const [transactionData] =
         useState(initialTransactionData);
 
-useEffect(() => {
+    useEffect(() => {
 
-   socket.on(
-      "test_alert",
-      (data) => {
+        const handleTestAlert =
+            (data: AlertPayload) => {
 
-         console.log(data);
+                console.log(
+                    "TEST ALERT:",
+                    data
+                );
 
-         alert(data.message);
-      }
-   );
+                setAlerts(prev => [
+                    `[TEST] ${data.message}`,
+                    ...prev
+                ]);
+            };
 
-   return () => {
+        const handleSuspiciousActivity =
+            (data: AlertPayload) => {
 
-      socket.off("test_alert");
-   };
+                console.log(
+                    "SUSPICIOUS ACTIVITY:",
+                    data
+                );
 
-}, []);
+                setAlerts(prev => [
+                    `🚨 ${data.message}`,
+                    ...prev
+                ]);
+            };
+
+        const handleSipFailure =
+            (data: AlertPayload) => {
+
+                console.log(
+                    "SIP FAILURE:",
+                    data
+                );
+
+                setAlerts(prev => [
+                    `⚠️ ${data.message}`,
+                    ...prev
+                ]);
+            };
+
+        const handleServiceDown =
+            (data: AlertPayload) => {
+
+                console.log(
+                    "SERVICE DOWN:",
+                    data
+                );
+
+                setAlerts(prev => [
+                    `🔴 ${data.message}`,
+                    ...prev
+                ]);
+            };
+
+        socket.on(
+            "test_alert",
+            handleTestAlert
+        );
+
+        socket.on(
+            "suspicious_activity_detected",
+            handleSuspiciousActivity
+        );
+
+        socket.on(
+            "sip_failure_detected",
+            handleSipFailure
+        );
+
+        socket.on(
+            "service_down",
+            handleServiceDown
+        );
+
+        return () => {
+
+            socket.off(
+                "test_alert",
+                handleTestAlert
+            );
+
+            socket.off(
+                "suspicious_activity_detected",
+                handleSuspiciousActivity
+            );
+
+            socket.off(
+                "sip_failure_detected",
+                handleSipFailure
+            );
+
+            socket.off(
+                "service_down",
+                handleServiceDown
+            );
+        };
+
+    }, []);
 
     return (
 
@@ -181,7 +269,9 @@ useEffect(() => {
                                 strokeDasharray="3 3"
                             />
 
-                            <XAxis dataKey="month" />
+                            <XAxis
+                                dataKey="month"
+                            />
 
                             <YAxis />
 
@@ -190,7 +280,12 @@ useEffect(() => {
                             <Bar
                                 dataKey="transactions"
                                 fill="#06b6d4"
-                                radius={[10, 10, 0, 0]}
+                                radius={[
+                                    10,
+                                    10,
+                                    0,
+                                    0
+                                ]}
                             />
 
                         </BarChart>
@@ -229,14 +324,17 @@ useEffect(() => {
                         alerts.length === 0 && (
 
                             <p className="text-gray-400">
-                                No suspicious activity detected.
+                                Waiting for realtime events...
                             </p>
                         )
                     }
 
                     {
                         alerts.map(
-                            (alert, index) => (
+                            (
+                                alert,
+                                index
+                            ) => (
 
                                 <div
                                     key={index}

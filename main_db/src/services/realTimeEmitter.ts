@@ -9,10 +9,12 @@ export const emitSuspiciousActivity =
 
     const io = getIO();
 
+    console.log(
+        "Emitting suspicious activity"
+    );
+
     io.to("admins").emit(
-
         SOCKET_EVENTS.SUSPICIOUS_ACTIVITY,
-
         data
     );
 };
@@ -22,10 +24,12 @@ export const emitSipFailure =
 
     const io = getIO();
 
+    console.log(
+        "Emitting SIP failure"
+    );
+
     io.to("admins").emit(
-
         SOCKET_EVENTS.SIP_FAILURE,
-
         data
     );
 };
@@ -35,10 +39,12 @@ export const emitServiceDown =
 
     const io = getIO();
 
+    console.log(
+        "Emitting service down"
+    );
+
     io.to("admins").emit(
-
         SOCKET_EVENTS.SERVICE_DOWN,
-
         data
     );
 };

@@ -22,6 +22,7 @@ import {
 }
 from "./middleware/rate.Limit.middleware.js"; 
 import auditRoutes from './routes/auditRoutes.js';
+import { emitSuspiciousActivity } from './services/realTimeEmitter.js';
 
 dotenv.config();
 
@@ -50,7 +51,16 @@ app.use('/api/monitoring',monirouter);
 
 app.use('/api/audit', auditRoutes);
 app.use(apiRateLimiter);
+app.get("/test-socket", (req, res) => {
 
+    emitSuspiciousActivity({
+        message: "Test alert from backend"
+    });
+
+    res.json({
+        success: true
+    });
+});
 server.listen(4004, () => {
   console.log("Server is running on port 4004");
 });

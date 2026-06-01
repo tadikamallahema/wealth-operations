@@ -5,21 +5,14 @@ export const redisClient = createClient({
 });
 
 redisClient.on("connect", () => {
-
   console.log("Redis Connected ");
-
 });
 
 redisClient.on("error", (err) => {
-
   console.log("Redis Error ");
-
   console.error(err);
-
 });
 
 export async function connectRedis() {
-
   await redisClient.connect();
-
 }
