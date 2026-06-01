@@ -61,6 +61,7 @@ import AuditLogs from "./pages/monitoring/AuditLogs";
 import OperationsDashboard from "./pages/OperationalDashboard";
 import ComplianceDashboard from "./pages/ComplianceDashboard";
 import MonitorDashboard from "./pages/MonitorDashboard";
+import InvestorDetails from "./pages/InvestorDetails";
 function App() {
   return (
     <div>
@@ -80,6 +81,13 @@ function App() {
             </ProtectedRoutes>
             }
         />
+          <Route path="/investors/:id"
+          element={
+            <ProtectedRoutes allowedRoles={["Admin","Operations_manager"]}>
+              <InvestorDetails/>
+            </ProtectedRoutes>
+              }
+            />
 
         <Route path="/transactions"
           element={
