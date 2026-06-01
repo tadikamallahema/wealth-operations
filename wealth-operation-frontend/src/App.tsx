@@ -58,64 +58,67 @@ import ProtectedRoutes from "./context/ProtectedRoutes";
 import MonitoringDashboard from "./pages/monitoring/MonitoringDashboard";
 import SystemHealth from "./pages/monitoring/SystemHealth";
 import AuditLogs from "./pages/monitoring/AuditLogs";
+import OperationsDashboard from "./pages/OperationalDashboard";
+import ComplianceDashboard from "./pages/ComplianceDashboard";
+import MonitorDashboard from "./pages/MonitorDashboard";
 function App() {
-
   return (
-
     <div>
-
       <Routes>
-
-        <Route
-          path="/"
-          element={<Login />}
-        />
-
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
-        
-        <Route
-          path="/investors"
-          element=
-          {
-            <Investors />
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard"
+          element={
+            <ProtectedRoutes allowedRoles={["Admin","Operations_manager","Compliance_officer","Monitor"]}>
+              <Dashboard />
+            </ProtectedRoutes>
+          }
+        />  
+        <Route path="/investors"
+          element={
+            <ProtectedRoutes allowedRoles={["Admin","Operations_manager"]}>
+              <Investors />
+            </ProtectedRoutes>
             }
         />
 
-        <Route
-          path="/transactions"
+        <Route path="/transactions"
           element={
-            <Transactions />
+            <ProtectedRoutes allowedRoles={["Admin","Operations_manager"]}>
+              <Transactions />
+            </ProtectedRoutes>
             }
         />
 
-        <Route
-          path="/equity"
+        <Route path="/equity"
           element={
-            <Equity />
+            <ProtectedRoutes allowedRoles={["Admin","Operations_manager"]}>
+              
+              <Equity />
+            </ProtectedRoutes>
            }
         />
 
-        <Route
-          path="/mutual-funds"
+        <Route path="/mutual-funds"
           element={
-            <MutualFunds />
+            <ProtectedRoutes allowedRoles={["Admin","Operations_manager"]}>
+              <MutualFunds />
+            </ProtectedRoutes>
            }
         />
 
-        <Route
-          path="/profile"
+        <Route path="/profile"
           element={ 
-            <Profile />
+             <ProtectedRoutes allowedRoles={["Admin","Operations_manager","Compliance_officer","Monitor"]}>    
+              <Profile />
+            </ProtectedRoutes>
               }
         />
 
-        <Route
-          path="/monitoring"
+        <Route path="/monitoring"
           element={
-            <MonitoringDashboard />
+             <ProtectedRoutes allowedRoles={["Admin","Monitor"]}>    
+              <MonitoringDashboard />
+            </ProtectedRoutes>
          }
         />
 
@@ -126,12 +129,48 @@ function App() {
               allowedRoles={["Admin","Operations_manager"]}
             ><SystemHealth /></ProtectedRoutes>}
         /> */}
-
-        <Route path="/audit"  element={<AuditLogs/>}/>
+        <Route path="/audit"  element={
+          <ProtectedRoutes allowedRoles={["Admin","Compliance_officer","Monitor"]}>    
+              <AuditLogs/>
+            </ProtectedRoutes>
+          }/>
         <Route
           path="*"
           element={<NotFound />}
         />
+
+          <Route path="/operations-dashboard"
+            element={
+               <OperationsDashboard/>
+              }
+              />
+              {/* <ProtectedRoutes
+                allowedRoles={["Operations_manager"]}
+              >
+               
+              </ProtectedRoutes> */}
+
+          <Route
+            path="/compliance-dashboard"
+            element={
+              <ComplianceDashboard/>
+              
+            }
+          />
+          {/* <ProtectedRoutes
+                allowedRoles={["Compliance_officer"]}
+              >
+              </ProtectedRoutes> */}
+
+          <Route
+            path="/monitor-dashboard"
+            element={
+              <MonitorDashboard/>
+             /*  <ProtectedRoutes
+                allowedRoles={["Monitor"]}>
+              </ProtectedRoutes> */
+            }
+          />
 
       </Routes>
 

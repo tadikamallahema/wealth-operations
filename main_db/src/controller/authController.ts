@@ -40,14 +40,14 @@ export async function login(req:Request,res:Response){
         return res.status(401).json({success:false,message:"Password is incorrect "})
     }
     //console.log(process.env.SECRET!);
-    const token=jwt.sign({id:existingUser.id,role:existingUser.role},process.env.SECRET!,{expiresIn:'10m'}); 
+    const token=jwt.sign({id:existingUser.id,email:existingUser.email,role:existingUser.role},process.env.SECRET!,{expiresIn:'10m'}); 
      res.cookie("token",token,{
             httpOnly:true, // cant access via js
             secure:false,
             sameSite:'lax',
             maxAge: 2*60 * 1000
         });
-    const refreshtoken=jwt.sign({id:existingUser.id,role:existingUser.role},process.env.SECRET!,{expiresIn:'10m'}); 
+    const refreshtoken=jwt.sign({id:existingUser.id,email:existingUser.email,role:existingUser.role},process.env.SECRET!,{expiresIn:'10m'}); 
      res.cookie("refreshToken",refreshtoken,{
             httpOnly:true, // cant access via js
             secure:false,
@@ -66,5 +66,23 @@ export async function getUsers(req:Request,res:Response){
 
     }catch(err:any){
         return res.status(500).json({message:err.message});
+    }
+}
+
+export async function logout(req: Request,res: Response) {
+    try {
+        res.clearCookie("token",{
+                httpOnly: true,
+                secure: false,
+                sameSite: "lax"
+            });
+        res.clearCookie("refreshToken",{
+                httpOnly: true,
+                secure: false,
+                sameSite: "lax"
+            });
+        return res.status(200).json({success: true,message: "Logged out successfully"});
+    } catch (err: any) {
+        return res.status(500).json({success: false,message: "Logout failed",error: err.message});
     }
 }

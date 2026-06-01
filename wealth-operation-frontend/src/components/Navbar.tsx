@@ -1,8 +1,21 @@
+import axios from "axios";
 import {Bell,Search} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
     const navigate=useNavigate();
+    const handleLogout = async () => {
+        try {
+            await axios.post("http://localhost:4004/api/auth/logout",
+                {},
+                {withCredentials: true}
+            );
+            navigate("/", { replace: true });
+        } catch (err:any) {
+            console.error("Logout failed:",err.response?.data || err.message);
+        }
+    };
+
     return (
         <div
             className=" h-[80px] bg-[#0f172a] border-b border-white/10 px-8 flex justify-between items-center text-white">
@@ -24,9 +37,7 @@ export default function Navbar() {
                 </button>
                 <button
                     className=" bg-gradient-to-r from-red-500 to-pink-500 px-5 py-3 rounded-xl"
-                    onClick={()=>{
-navigate('/')
-                    }}>Logout
+                    onClick={handleLogout}>Logout
                 </button>
             </div>
         </div>

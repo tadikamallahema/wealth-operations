@@ -12,6 +12,7 @@ export const verifyToken = async(req: Request, res: Response, next: NextFunction
     const decoded = jwt.verify(token, process.env.SECRET!) as any;
     (req as any).user = {
       id: decoded.id,
+      email:decoded.email,
       role: decoded.role as Role,
     };
     //console.log(decoded);
@@ -28,7 +29,7 @@ export const refreshAccessToken=(req: Request,res:Response,)=>{
   }
   try{
     const decode=jwt.verify(refreshToken, process.env.JWT_SECRET_REFRESH!) as any;
-    const newAccessToken=jwt.sign({id:decode.id,role:decode.role},process.env.JWT_SECRET!,{expiresIn:'15m'});
+    const newAccessToken=jwt.sign({id:decode.id,email:decode.email,role:decode.role},process.env.JWT_SECRET!,{expiresIn:'15m'});
     res.cookie("token",newAccessToken,{
       httpOnly:true,
       secure:false,

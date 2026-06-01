@@ -10,8 +10,12 @@ import {
   Activity,
   ShieldAlert,
   BadgeAlert,
+  Home
 } from "lucide-react";
+
 import type { JSX } from "react";
+
+import { useAuth } from "../context/AuthContext";
 
 export type Role =
   | "Admin"
@@ -31,196 +35,271 @@ type MenuSection = {
 };
 
 export default function Sidebar() {
+
   const location = useLocation();
 
-  // TEMP ROLE
-  // later get from token/auth context
+  const { user } = useAuth();
 
-  const role: Role =
-    (localStorage.getItem("role") as Role) || "Admin";
+  if (!user) {
+    return (
+      <div
+        className="
+          w-[280px]
+          min-h-screen
+          bg-[#071028]
+          border-r
+          border-white/10
+          flex
+          items-center
+          justify-center
+          text-white
+        "
+      >
+        Loading...
+      </div>
+    );
+  }
+
+  const role = user.role as Role;
 
   const menuByRole: Record<Role, MenuSection[]> = {
+
     // ================= ADMIN =================
 
     Admin: [
+
       {
         section: "Operations",
 
         items: [
+
           {
             name: "Dashboard",
             path: "/dashboard",
-            icon: <LayoutDashboard size={20} />,
+            icon: <LayoutDashboard size={20} />
           },
 
           {
             name: "Investors",
             path: "/investors",
-            icon: <Users size={20} />,
+            icon: <Users size={20} />
           },
 
           {
             name: "Transactions",
             path: "/transactions",
-            icon: <ArrowLeftRight size={20} />,
+            icon: <ArrowLeftRight size={20} />
           },
 
           {
             name: "Equity",
             path: "/equity",
-            icon: <Landmark size={20} />,
+            icon: <Landmark size={20} />
           },
 
           {
             name: "Mutual Funds",
             path: "/mutual-funds",
-            icon: <Building2 size={20} />,
+            icon: <Building2 size={20} />
           },
-        ],
+
+
+        ]
       },
 
       {
         section: "Security & Monitoring",
 
         items: [
+
           {
             name: "Monitor Dashboard",
             path: "/monitoring",
-            icon: <ShieldAlert size={20} />,
+            icon: <ShieldAlert size={20} />
           },
 
           {
             name: "Audit Logs",
             path: "/audit",
-            icon: <Activity size={20} />,
-          },
+            icon: <Activity size={20} />
+          }
 
-          
-        ],
-      },
+        ]
+      }
 
-      
     ],
 
     // ================= OPERATIONS =================
 
     Operations_manager: [
+
       {
         section: "Operations",
 
         items: [
+
           {
             name: "Dashboard",
             path: "/dashboard",
-            icon: <LayoutDashboard size={20} />,
+            icon: <LayoutDashboard size={20} />
           },
 
           {
             name: "Investors",
             path: "/investors",
-            icon: <Users size={20} />,
+            icon: <Users size={20} />
           },
 
           {
             name: "Transactions",
             path: "/transactions",
-            icon: <ArrowLeftRight size={20} />,
+            icon: <ArrowLeftRight size={20} />
           },
 
           {
             name: "Equity",
             path: "/equity",
-            icon: <Landmark size={20} />,
+            icon: <Landmark size={20} />
           },
 
           {
             name: "Mutual Funds",
             path: "/mutual-funds",
-            icon: <Building2 size={20} />,
+            icon: <Building2 size={20} />
           },
-        ],
-      },
+
+        ]
+      }
+
     ],
 
     // ================= COMPLIANCE =================
 
     Compliance_officer: [
+
       {
         section: "Compliance",
 
         items: [
+
           {
             name: "Dashboard",
             path: "/dashboard",
-            icon: <LayoutDashboard size={20} />,
+            icon: <LayoutDashboard size={20} />
           },
 
           {
             name: "Audit Logs",
             path: "/audit",
-            icon: <Activity size={20} />,
+            icon: <Activity size={20} />
           },
-
 
           {
             name: "Fraud Detection",
             path: "/fraud-detection",
-            icon: <BadgeAlert size={20} />,
-          },
-        ],
-      },
+            icon: <BadgeAlert size={20} />
+          }
+
+        ]
+      }
+
     ],
 
     // ================= MONITOR =================
 
     Monitor: [
+
       {
         section: "Monitoring",
 
         items: [
+
           {
             name: "Dashboard",
             path: "/dashboard",
-            icon: <LayoutDashboard size={20} />,
+            icon: <LayoutDashboard size={20} />
           },
 
           {
             name: "Monitor Dashboard",
             path: "/monitoring",
-            icon: <ShieldAlert size={20} />,
+            icon: <ShieldAlert size={20} />
           },
 
           {
             name: "Audit Logs",
             path: "/audit",
-            icon: <Activity size={20} />,
-          },
+            icon: <Activity size={20} />
+          }
 
-        
-        ],
-      },
-    ],
+        ]
+      }
+
+    ]
+
   };
 
-  const menus = menuByRole[role];
+  const menus =
+    menuByRole[role] ||
+    menuByRole.Admin;
 
   return (
-    <div className="w-[280px] min-h-screen bg-[#071028] border-r border-white/10 text-white px-6 py-7 flex flex-col">
+
+    <div
+      className="
+        w-[280px]
+        min-h-screen
+        bg-[#071028]
+        border-r
+        border-white/10
+        text-white
+        px-6
+        py-7
+        flex
+        flex-col
+      "
+    >
+
       {/* LOGO */}
 
       <div>
-        <h1 className="text-4xl font-black tracking-wide bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent">
+
+        <h1
+          className="
+            text-4xl
+            font-black
+            tracking-wide
+            bg-gradient-to-r
+            from-cyan-400
+            via-blue-500
+            to-violet-500
+            bg-clip-text
+            text-transparent
+          "
+        >
           FinOps
         </h1>
 
         <p className="text-slate-400 text-sm mt-2">
           Wealth Operations Platform
         </p>
+
       </div>
 
       {/* ROLE */}
 
-      <div className="mt-6 bg-cyan-500/10 border border-cyan-500/20 rounded-xl px-4 py-3">
+      <div
+        className="
+          mt-6
+          bg-cyan-500/10
+          border
+          border-cyan-500/20
+          rounded-xl
+          px-4
+          py-3
+        "
+      >
+
         <p className="text-xs text-slate-400">
           Logged in as
         </p>
@@ -228,32 +307,50 @@ export default function Sidebar() {
         <p className="font-semibold text-cyan-300">
           {role.replace("_", " ")}
         </p>
+
       </div>
 
       {/* MENU */}
 
       <div className="mt-10 flex flex-col gap-8">
+
         {menus.map((menuGroup) => (
+
           <div
             key={menuGroup.section}
             className="flex flex-col gap-3"
           >
-            <p className="text-xs uppercase tracking-widest text-slate-500 px-2">
+
+            <p
+              className="
+                text-xs
+                uppercase
+                tracking-widest
+                text-slate-500
+                px-2
+              "
+            >
               {menuGroup.section}
             </p>
 
             {menuGroup.items.map((menu) => {
+
               const isActive =
                 location.pathname === menu.path;
 
               return (
+
                 <Link
                   key={menu.name}
                   to={menu.path}
                   className={`
-                    flex items-center gap-4
-                    p-4 rounded-2xl
-                    transition-all duration-300
+                    flex
+                    items-center
+                    gap-4
+                    p-4
+                    rounded-2xl
+                    transition-all
+                    duration-300
 
                     ${
                       isActive
@@ -262,27 +359,40 @@ export default function Sidebar() {
                     }
                   `}
                 >
-                  <div>{menu.icon}</div>
+
+                  <div>
+                    {menu.icon}
+                  </div>
 
                   <span className="font-medium">
                     {menu.name}
                   </span>
+
                 </Link>
+
               );
             })}
+
           </div>
+
         ))}
+
       </div>
 
       {/* PROFILE */}
 
       <div className="mt-auto">
+
         <Link
           to="/profile"
           className={`
-            flex items-center gap-4
-            p-4 rounded-2xl
-            border transition-all
+            flex
+            items-center
+            gap-4
+            p-4
+            rounded-2xl
+            border
+            transition-all
 
             ${
               location.pathname === "/profile"
@@ -291,17 +401,25 @@ export default function Sidebar() {
             }
           `}
         >
+
           <UserRound size={20} />
 
           <div>
-            <p className="font-medium">Profile</p>
+
+            <p className="font-medium">
+              Profile
+            </p>
 
             <p className="text-xs text-slate-400">
               Account Settings
             </p>
+
           </div>
+
         </Link>
+
       </div>
+
     </div>
   );
 }
